@@ -7,9 +7,15 @@
 		<script src="<?php echo base_url('assets/js/bootstrap.min.js'); ?>"></script>
 	</head>
 	<body>
-			<div class="container pt-5">
+			<div class="container p-5">
 				<h3>Insert date using codeIgniter</h3>
-				<form method="post" action="<?php echo base_url()?>main/form_validation">
+
+				<?php
+				if($this->uri->segment(2) == 'inserted'){
+					echo '<p class="text-success">Data Inserted</p>';
+				}
+				?>
+				<form method="post" action="<?php echo base_url()?>main/form_validation" class="pt-5">
 					<div class="form-group">
 						<label>Enter First Name</label>
 						<input type="text" name="first_name" class="form-control">
@@ -20,7 +26,39 @@
 						<input type="text" name="last_name" class="form-control">
 						<span class="text-danger"><?php echo form_error('last_name');?></span>
 					</div>
+					<div class="form-group">
+						<button type="submit" name="insert" class="btn btn-info">Insert</button>
+					</div>
 				</form>
+
+				<div class="table-responsive">
+					<table class="table table-bordered">
+						<tr>
+							<th>ID</th>
+							<th>First Name</th>
+							<th>Last Name</th>
+						</tr>
+						<?php
+						if($fetch_data->num_rows() > 0) {
+							foreach ($fetch_data->result() as $row) {
+								?>
+								<tr>
+								<td><?php echo $row->Id; ?></td>
+								<td><?php echo $row->first_name; ?></td>
+								<td><?php echo $row->last_name; ?></td>
+								</tr>
+						<?php
+							}
+						}
+						else{ ?>
+						<tr>
+							<td colspan="3" class="text-center">No Data Found</td>
+							</tr>
+						<?php
+						}
+						?>
+					</table>
+				</div>
 			</div>
 	</body>
 </html>
