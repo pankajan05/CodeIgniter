@@ -9,4 +9,9 @@ class Main_model extends CI_Model{
 		$query = $this->db->get('user');
 		return $query;
 	}
+
+	function delete_data($id){
+		$this->db->where("id", $id);
+		$this->db->delete('user');
+	}
 }

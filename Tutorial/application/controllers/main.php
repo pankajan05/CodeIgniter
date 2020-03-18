@@ -33,4 +33,15 @@ class Main extends CI_Controller {
 		$this->index();
 	}
 
+	public function delete_data(){
+		$id = $this->uri->segment(3);
+		$this->load->model('main_model');
+		$this->main_model->delete_data($id);
+		redirect(base_url(). "main/deleted");
+	}
+
+	public function deleted(){
+		$this->index();
+	}
+
 }

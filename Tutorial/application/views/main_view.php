@@ -37,6 +37,7 @@
 							<th>ID</th>
 							<th>First Name</th>
 							<th>Last Name</th>
+							<th>Delete</th>
 						</tr>
 						<?php
 						if($fetch_data->num_rows() > 0) {
@@ -46,6 +47,7 @@
 								<td><?php echo $row->Id; ?></td>
 								<td><?php echo $row->first_name; ?></td>
 								<td><?php echo $row->last_name; ?></td>
+									<td><a href="#" class="delete_data" id="<?php echo $row->Id; ?>">Delete</a> </td>
 								</tr>
 						<?php
 							}
@@ -60,5 +62,19 @@
 					</table>
 				</div>
 			</div>
+			<script>
+	$(document).ready(function(){
+		$('.delete_data').click(function(){
+			var id = $(this).attr("id");
+			if(confirm("Are you sure you want to delete this?"))
+			{
+			window.location = "<?php echo base_url();?>main/delete_data/"+id;
+			}
+			else {
+			return false;
+			}
+        });
+        });
+			</script>
 	</body>
 </html>
