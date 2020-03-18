@@ -20,9 +20,16 @@ class Main extends CI_Controller {
 				"first_name" => $this->input->post("first_name"),
 				"last_name" => $this->input->post("last_name"),
 			);
-			$this->main_model->insert_data($data);
-
-			redirect(base_url() . "main/inserted");
+			echo $this->input->post('insert');
+			if($this->input->post('update')){
+				echo "dfd";
+				$this->main_model->update_data($data, $this->input->post('hidden_id'));
+				redirect(base_url()). "main/updated";
+			}
+			if($this->input->post('insert')) {
+				$this->main_model->insert_data($data);
+				redirect(base_url() . "main/inserted");
+			}
 		} else {
 			$this->index();
 		}
@@ -42,6 +49,18 @@ class Main extends CI_Controller {
 
 	public function deleted(){
 		$this->index();
+	}
+
+	public function updated(){
+		$this->index();
+	}
+
+	public function update_data(){
+		$id = $this->uri->segment(3);
+		$this->load->model('main_model');
+		$data['user_data'] = $this->main_model->fetch_singledata($id);
+		$data['fetch_data'] = $this->main_model->fetch_data();
+		$this->load->view('main_view', $data);
 	}
 
 }

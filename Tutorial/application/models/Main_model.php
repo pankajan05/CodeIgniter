@@ -14,4 +14,14 @@ class Main_model extends CI_Model{
 		$this->db->where("id", $id);
 		$this->db->delete('user');
 	}
+
+	function fetch_singledata($id){
+		$this->db->where("Id", $id);
+		return $this->db->get('user');
+	}
+
+	function update_data($data, $id) {
+		$this->db->where('id', $id);
+		$this->db->update('user', $data);
+	}
 }

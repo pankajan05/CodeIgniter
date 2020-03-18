@@ -14,22 +14,55 @@
 				if($this->uri->segment(2) == 'inserted'){
 					echo '<p class="text-success">Data Inserted</p>';
 				}
+				if($this->uri->segment(2) == 'updated'){
+					echo '<p class="text-success">Data Inserted</p>';
+				}
 				?>
-				<form method="post" action="<?php echo base_url()?>main/form_validation" class="pt-5">
+
+				<?php
+				if(isset($user_data)){
+				foreach ($user_data->result() as $row) {
+					?>
+					<form method="post" action="<?php echo base_url() ?>main/form_validation" class="pt-5">
+						<div class="form-group">
+							<label>Enter First Name</label>
+							<input type="text" name="first_name" value="<?php echo $row->first_name; ?>"
+								   class="form-control">
+							<span class="text-danger"><?php echo form_error('first_name'); ?></span>
+						</div>
+						<div class="form-group">
+							<label>Enter Last Name</label>
+							<input type="text" name="last_name" value="<?php echo $row->last_name; ?>"
+								   class="form-control">
+							<span class="text-danger"><?php echo form_error('last_name'); ?></span>
+						</div>
+						<div class="form-group">
+							<input type="hidden" name="hidden_id" value="<?php echo $row->Id; ?>">
+							<input type="submit" name="update" value="Update" class="btn btn-info"></input>
+						</div>
+					</form>
+					<?php
+					}
+				}
+				else {
+				?>
+				<form method="post" action="<?php echo base_url() ?>main/form_validation" class="pt-5">
 					<div class="form-group">
 						<label>Enter First Name</label>
 						<input type="text" name="first_name" class="form-control">
-						<span class="text-danger"><?php echo form_error('first_name');?></span>
+						<span class="text-danger"><?php echo form_error('first_name'); ?></span>
 					</div>
 					<div class="form-group">
 						<label>Enter Last Name</label>
 						<input type="text" name="last_name" class="form-control">
-						<span class="text-danger"><?php echo form_error('last_name');?></span>
+						<span class="text-danger"><?php echo form_error('last_name'); ?></span>
 					</div>
 					<div class="form-group">
-						<button type="submit" name="insert" class="btn btn-info">Insert</button>
+						<input type="submit" name="insert" value="Insert" class="btn btn-info"></input>
 					</div>
 				</form>
+				<?php
+				}?>
 
 				<div class="table-responsive">
 					<table class="table table-bordered">
@@ -37,6 +70,7 @@
 							<th>ID</th>
 							<th>First Name</th>
 							<th>Last Name</th>
+							<th>Update</th>
 							<th>Delete</th>
 						</tr>
 						<?php
@@ -47,6 +81,7 @@
 								<td><?php echo $row->Id; ?></td>
 								<td><?php echo $row->first_name; ?></td>
 								<td><?php echo $row->last_name; ?></td>
+									<td><a href="<?php echo base_url();?>/main/update_data/<?php echo $row->Id; ?>">Update</a> </td>
 									<td><a href="#" class="delete_data" id="<?php echo $row->Id; ?>">Delete</a> </td>
 								</tr>
 						<?php
